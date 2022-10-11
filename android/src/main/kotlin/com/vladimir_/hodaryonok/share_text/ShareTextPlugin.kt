@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -13,7 +12,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 /** ShareTextPlugin */
-class ShareTextPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
+class ShareTextPlugin: FlutterPlugin, MethodCallHandler {
 
   private lateinit var channel : MethodChannel
   private lateinit var context: Context
@@ -21,6 +20,7 @@ class ShareTextPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "share_text")
     channel.setMethodCallHandler(this)
+    context = flutterPluginBinding.getApplicationContext()
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -45,14 +45,4 @@ class ShareTextPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     val sharingIntent = Intent.createChooser(sendIntent, "Movie Sharing")
     context.startActivity(sharingIntent)
   }
-
-  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-    context = binding.activity
-  }
-
-  override fun onDetachedFromActivityForConfigChanges() {}
-
-  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
-
-  override fun onDetachedFromActivity() {}
 }
