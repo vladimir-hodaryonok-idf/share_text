@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'share_text_method_channel.dart';
@@ -24,6 +25,10 @@ abstract class ShareTextPlatform extends PlatformInterface {
   }
 
   Future<void> shareText(String message) async {
+    throw UnimplementedError('shareText() has not been implemented.');
+  }
+
+  Future<void> macShareText(String message,RenderBox? box) async {
     throw UnimplementedError('shareText() has not been implemented.');
   }
 }
