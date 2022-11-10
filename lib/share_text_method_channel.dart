@@ -26,11 +26,13 @@ class MethodChannelShareText extends ShareTextPlatform {
   @override
   Future<void> macShareText(String message, RenderBox? box) async {
     final params = <String, dynamic>{'text': message};
-    final rect = box!.localToGlobal(Offset.zero) & box.size;
-    params['originX'] = rect.left;
-    params['originY'] = rect.top;
-    params['originWidth'] = rect.width;
-    params['originHeight'] = rect.height;
+    if(box != null){
+      final rect = box.localToGlobal(Offset.zero) & box.size;
+      params['originX'] = rect.left;
+      params['originY'] = rect.top;
+      params['originWidth'] = rect.width;
+      params['originHeight'] = rect.height;
+    }
 
     try {
       await methodChannel.invokeMethod(_invokeMethodShare, params);
